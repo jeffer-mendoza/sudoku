@@ -1,0 +1,1 @@
+/opt/jdk1.8.0_31/bin/java -jar dist/Sudoku.jar sudoku.txt & sleep 5 && kill $! 2>/dev/null && echo "myProgram didn't finish"

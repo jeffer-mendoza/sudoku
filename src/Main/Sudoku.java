@@ -26,7 +26,7 @@ public class Sudoku {
 
     public boolean resolve() {
         Random random = new Random();
-        int cellEmpty = 0;//número de celdas limpias
+        int cellEmpty = 0;//número de celdas vacias
         int cellEmptyLast = 9999;//numero de celdas en el último ciclo
         int cellFilled = this.cellsFilled();
         boolean success = false;
@@ -37,7 +37,6 @@ public class Sudoku {
                 for (int j = 0; j < 9; j++) {
                     if (this.board[i][j] == 0) {//si la celda no está asignada
                         value = random();
-                        System.out.println(value);
                         if (isLegal(i, j, value)) {// si el valor no se encontro en fila, columna y cuadricula es legal
                             this.board[i][j] = value;//se asigna el valor
                             cellFilled++;
@@ -47,7 +46,7 @@ public class Sudoku {
                     } 
                 }
             }
-            if (cellEmpty == 0) {//si no hay celdas vacías
+            if (cellFilled == 81) {//si no hay celdas vacías
                 success = true;//se llenaron todas las casillas
             } else {
 //                if (cellEmpty == cellEmptyLast) {// si las celdas vacías son las mismas que el anterior ciclo
