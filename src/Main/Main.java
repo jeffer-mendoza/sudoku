@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-
     /**
      * @param args the command line arguments
      */
@@ -26,12 +25,14 @@ public class Main {
             System.out.println("Init Board");
             sudoku.showBoard();
             long start = System.currentTimeMillis();
-            boolean solved = sudoku.start();
+            boolean solved = sudoku.resolve();
             long end = System.currentTimeMillis();
-            if (sudoku.getAnswer()>0) {
+            if (solved) {
                 System.out.println("Tiempo de solución:" + (end - start) + " ms");
-            }else{
+                sudoku.showBoard();
+            } else {
                 System.out.println("No solved");
+                sudoku.showBoard();
             }
 
         } catch (IOException ex) {
