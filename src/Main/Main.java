@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            Sudoku sudoku = new Sudoku(Resource.readerFile(args[0]));
+            Sudoku sudoku = new Sudoku(Resource.readerFile("sudoku2.txt"));
             System.out.println("Init Board");
             sudoku.showBoard();
             long start = System.currentTimeMillis();

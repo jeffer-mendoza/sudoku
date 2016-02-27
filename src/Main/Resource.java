@@ -34,4 +34,20 @@ public class Resource {
         b.close();
         return board;
     }
+    
+    public static float[] distribucionUniforme(int A, int B, float[] numerosAleatorios, int size) {
+        float array[] = new float[size];
+        for (int i = 1; i < size; i++) {
+            array[i] = (B - A) * numerosAleatorios[i] + A;
+        }
+
+        return array;
+    }
+    
+    public static int random(int rango[]) {
+    
+        java.util.Random random = new java.util.Random();
+        int a=  Math.abs((random.nextInt() % rango.length));
+        return rango[a];
+    }
 }

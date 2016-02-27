@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sudoku">
+    <output-path>$PROJECT_DIR$/dist</output-path>
+    <root id="archive" name="sudoku.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/manifest.mf" />
+      </element>
+    </root>
+  </artifact>
+</component>
