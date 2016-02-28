@@ -51,13 +51,13 @@ public class Sudoku {
                                 cellEmpty--;
                                 if (cellFilled == 81) {//si no hay celdas vacías
                                     System.out.println(iteracion + ";" + cellFilled + ";" + cellEmpty + ";exito");
-//                                    this.showBoard();
+                                    this.showBoard();
                                     return true;
                                 }
                             }
                         } else {
                             System.out.println(iteracion + ";" + cellFilled + ";" + cellEmpty + ";fracaso");
-//                            this.showBoard();
+                            this.showBoard();
                             return false;
                         }
                     }
