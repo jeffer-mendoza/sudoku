@@ -20,20 +20,14 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-
-            Sudoku sudoku = new Sudoku(Resource.readerFile("sudoku2.txt"));
+            int numeroIteraciones = Integer.parseInt(args[1]);
+            Sudoku sudoku = new Sudoku(Resource.readerFile(args[0]), numeroIteraciones);
             System.out.println("Init Board");
             sudoku.showBoard();
             long start = System.currentTimeMillis();
             boolean solved = sudoku.resolve();
             long end = System.currentTimeMillis();
-            if (solved) {
-                System.out.println("Tiempo de solución:" + (end - start) + " ms");
-                sudoku.showBoard();
-            } else {
-                System.out.println("No solved");
-                sudoku.showBoard();
-            }
+            System.out.println("Tiempo de solución:" + (end - start) + " ms");
 
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

@@ -44,10 +44,4 @@ public class Resource {
         return array;
     }
     
-    public static int random(int rango[]) {
-    
-        java.util.Random random = new java.util.Random();
-        int a=  Math.abs((random.nextInt() % rango.length));
-        return rango[a];
-    }
 }
