@@ -41,7 +41,7 @@ public class Sudoku {
         while (iteraciones <= numeroIteraciones) {
             this.board = this.boardinit;//se inicializa el board
             cellFilled = this.cellsFilled();
-            cellEmpty = 0;
+            cellEmpty = 81 - cellFilled;
 
             while (!success) {
                 for (int i = 0; i < 9; i++) {
@@ -58,9 +58,8 @@ public class Sudoku {
                             if (isLegal(i, j, value)) {// si el valor no se encontro en fila, columna y cuadricula es legal
                                 this.board[i][j] = value;//se asigna el valor
                                 cellFilled++;
-                            } else {
-                                cellEmpty++;//aumente el valor de celdas vacias
-                            }
+                                cellEmpty--;
+                            } 
                         }
                     }
                 }
@@ -68,10 +67,7 @@ public class Sudoku {
                     System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";exito");
                     this.showBoard();
                     return true;
-                } else {
-                    cellEmptyLast = cellEmpty;
-                    cellEmpty = 0;
-                }
+                } 
             }
 
             iteraciones++;
