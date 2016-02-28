@@ -20,17 +20,25 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            int numeroIteraciones = Integer.parseInt(args[1]);
-            Sudoku sudoku = new Sudoku(Resource.readerFile(args[0]), numeroIteraciones);
+            int iteraciones = Integer.parseInt(args[1]);
+            Sudoku sudoku = new Sudoku(Resource.readerFile(args[0]));
             System.out.println("Init Board");
             sudoku.showBoard();
             long start = System.currentTimeMillis();
-            boolean solved = sudoku.resolve();
+
+            System.out.println("numeroIteracion;celdasLlenas;celdasVacias;estado");
+            for (int iteracion = 0; iteracion < iteraciones; iteracion++) {
+                sudoku.setBoard(Resource.readerFile(args[0]));
+                sudoku.resolve(iteracion);
+            }
             long end = System.currentTimeMillis();
-            System.out.println("Tiempo de solución:" + (end - start) + " ms");
+
+            System.out.println(
+                    "Tiempo de solución:" + (end - start) + " ms");
 
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

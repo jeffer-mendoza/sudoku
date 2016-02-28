@@ -15,65 +15,56 @@ import java.util.logging.Logger;
  */
 public class Sudoku {
 
-    private int[][] boardinit;
     private int[][] board;
     private int answer = 0;
-    private int numeroIteraciones;
     private Random random;
 
-    public Sudoku(int board[][], int numeroIteraciones) {
+    public Sudoku(int board[][]) {
         this.board = board;
-        this.boardinit = board;
-        this.numeroIteraciones = numeroIteraciones;
         Date d = new Date();
-        random = new java.util.Random();
     }
 
-    public boolean resolve() {
+    
+
+    public boolean resolve(int iteracion) {
         Random random = new Random();
+        int numerosFaltantes[];
         int cellEmpty = 0;//número de celdas vacias
         int cellEmptyLast = 9999;//numero de celdas en el último ciclo
         int cellFilled = this.cellsFilled();//obtener el número de celdas que ya están asignadas
         boolean success = false;
         int value = 0;
-        int iteraciones = 1;
-        System.out.println("numeroIteracion;celdasLlenas;celdasVacias;estado");
-        while (iteraciones <= numeroIteraciones) {
-            this.board = this.boardinit;//se inicializa el board
-            cellFilled = this.cellsFilled();
-            cellEmpty = 81 - cellFilled;
-
-            while (!success) {
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (this.board[i][j] == 0) {
-                            try {
-                                //si la celda no está asignada
-                                value = this.generarRandom(this.NumerosFaltan(i, j));
-                            } catch (Exception ex) {
-                                //cuando se tiene fracaso
-                                success = true;//pasar a la siguiente iteracion
-                                System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";fracaso");
-                                this.showBoard();
-                            }
+        cellFilled = this.cellsFilled();
+        cellEmpty = 81 - cellFilled;
+        success = false;
+        while (true) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (this.board[i][j] == 0) {
+                        //si la celda no está asignada
+                        numerosFaltantes = this.NumerosFaltan(i, j);
+                        if (numerosFaltantes.length > 0) {
+                            value = this.generarRandom(numerosFaltantes);
                             if (isLegal(i, j, value)) {// si el valor no se encontro en fila, columna y cuadricula es legal
                                 this.board[i][j] = value;//se asigna el valor
                                 cellFilled++;
                                 cellEmpty--;
-                            } 
+                                if (cellFilled == 81) {//si no hay celdas vacías
+                                    System.out.println(iteracion + ";" + cellFilled + ";" + cellEmpty + ";exito");
+//                                    this.showBoard();
+                                    return true;
+                                }
+                            }
+                        } else {
+                            System.out.println(iteracion + ";" + cellFilled + ";" + cellEmpty + ";fracaso");
+//                            this.showBoard();
+                            return false;
                         }
                     }
                 }
-                //cuando se tiene exito
-                if (cellFilled == 81) {//si no hay celdas vacías
-                    System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";exito");
-                    this.showBoard();
-                } 
             }
 
-            iteraciones++;
         }
-        return success;
     }
 
     public int cellsFilled() {
@@ -89,6 +80,7 @@ public class Sudoku {
     }
 
     public int generarRandom(int rango[]) {
+        random = new java.util.Random();
         int a = Math.abs((this.random.nextInt() % rango.length));
         return rango[a];
     }
@@ -130,7 +122,7 @@ public class Sudoku {
         return true; //el valor no existe en fila, columna y fila, entonces es legal asignarlo
     }
 
-    public int[] NumerosFaltan(int row, int col) throws Exception {
+    public int[] NumerosFaltan(int row, int col) {
         List<Integer> numeros = new LinkedList<>();
         numeros.add(new Integer(1));
         numeros.add(new Integer(2));
@@ -162,9 +154,6 @@ public class Sudoku {
         int resultado[] = new int[numeros.size()];
         for (int j = 0; j < numeros.size(); j++) {
             resultado[j] = numeros.get(j);
-        }
-        if (resultado.length == 0) {
-            throw new Exception("El suduko cayo en un bloqueo irreversible");
         }
         return resultado;
 
@@ -198,5 +187,11 @@ public class Sudoku {
 
         return boardString;
     }
+
+    public void setBoard(int[][] board) {
+        this.board = board;
+    }
+    
+    
 
 }
