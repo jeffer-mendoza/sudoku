@@ -105,15 +105,15 @@ public class SudokuTest {
                 {0, 0, 0, 0, 0, 0, 0, 6, 5},
                 {0, 0, 4, 0, 6, 7, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 3, 0}};
-        int row = 6;
-        int col = 6;
+        int row = 2;
+        int col = 8;
         int value = 6;
         Sudoku instance = new Sudoku(board);
         boolean expResult = true;
         boolean result = instance.neighboring(row, col, value);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        fail("The test case is a prototype.");
     }
 
     /**

@@ -15,7 +15,7 @@ public class Sudoku {
     private int[][] board;
     private int answer = 0;
 
-    private int neighboring[] = {1, 2, 0, 2, 0, 1};
+    private int neighboring[] = {1, 0, 0, 2, 2, 1};
 
     public Sudoku(int board[][]) throws IOException {
         this.board = board;
@@ -94,36 +94,73 @@ public class Sudoku {
      * @return
      */
     public boolean neighboring(int row, int col, int value) {
+        List<Integer> casillasRemovidas = new LinkedList<>();
+
         boolean cond1 = false;
         boolean cond2 = false;
         boolean cond3 = false;
         boolean cond4 = false;
 
-        int row1 = neighboring[(row % 3)] + row / 3;
-        int row2 = neighboring[(row % 3) + 1] + row / 3;
-        int col1 = neighboring[(col % 3)] + col / 3;
-        int col2 = neighboring[(col % 3) + 1] + col / 3;
-        //verifica si en la fila existe el valor
+        int cellInvalide = 0; //numero de celdas en la que no se puede colocar el numero
+
+        int row1 = neighboring[(row % 3)] + (row / 3) * 3;
+        int row2 = neighboring[(row % 3) + 3] + (row / 3) * 3;
+        int col1 = neighboring[(col % 3)] + (col / 3) * 3;
+        int col2 = neighboring[(col % 3) + 3] + (col / 3) * 3;
+
+        System.out.println("fil " + row1 + " " + row2);
+        System.out.println("col " + col1 + " " + col2);
+        System.out.println("dos " + row + " " + col);
+        //verifica si en la fila existe el valor 
         for (int j = 0; j < 9; j++) {
-            if (this.board[row1][j] == value) {
+            if (this.board[row1][j] == value || this.board[row1][j] == 0) {
                 cond1 = true;
+            } else {
+                if ((j >= col1 && j <= col2) || j == col) {
+                    cellInvalide++;
+                    System.out.println(row1 + " " + j);
+                }
             }
-            if (this.board[row2][j] == value) {
+
+            if (this.board[row2][j] == value || this.board[row2][j] == 0) {
                 cond2 = true;
+            } else {
+                if ((j >= col1 && j <= col2) || j == col) {
+                    cellInvalide++;
+                    System.out.println(row2 + " " + j);
+                }
             }
         }
+        System.out.println("numero de celdas: " + cellInvalide);
+
         //verifica si en la columna existe el valor
         for (int i = 0; i < 9; i++) {
-            if (this.board[i][col1] == value) {
+            if (this.board[i][col1] == value || this.board[i][col1] == 0) {
                 cond3 = true;
+            } else {
+                if (i == row) {
+                    cellInvalide++;
+                }
             }
-            if (this.board[i][col2] == value) {
+            if (this.board[i][col2] == value || this.board[i][col2] == 0) {
                 cond4 = true;
+            } else {
+                if (i == row) {
+                    cellInvalide++;
+                }
             }
         }
+        System.out.println("numero de celdas: " + cellInvalide);
+        System.out.println("booleans" + cond1 + " " + cond2 + " " + cond3 + " " + cond4);
+        System.out.println(cond1 && cond2 && cond3 && cond4 && (cellInvalide == 8));
+//        if (cond1 && cond2 && cond3 && cond4 && (cellInvalide == 8)) {
+//            return true;
+//        }
+        if (cellInvalide == 8) {
+            return true;
+        }
 
-        return cond1 && cond2 && cond3 && cond4;
-
+        return false;
     }
 
     /**
@@ -192,15 +229,15 @@ public class Sudoku {
                 numeros.remove(new Integer(this.board[i][j]));
             }
         }
-        int resultado [] = new int[numeros.size()]; 
+        int resultado[] = new int[numeros.size()];
         for (int j = 0; j < numeros.size(); j++) {
-           resultado[j] = numeros.get(j);
+            resultado[j] = numeros.get(j);
         }
-        if(numeros.size() == 0){
-            System.out.print(row + " - " +col);
+        if (numeros.size() == 0) {
+            System.out.print(row + " - " + col);
             showBoard();
         }
-        
+
         return resultado;
     }
 
