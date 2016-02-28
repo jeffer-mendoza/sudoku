@@ -26,7 +26,7 @@ public class Sudoku {
         this.boardinit = board;
         this.numeroIteraciones = numeroIteraciones;
         Date d = new Date();
-        random = new java.util.Random(d.getTime());
+        random = new java.util.Random();
     }
 
     public boolean resolve() {
@@ -52,6 +52,8 @@ public class Sudoku {
                                 value = this.generarRandom(this.NumerosFaltan(i, j));
                             } catch (Exception ex) {
                                 success = true;//pasar a la siguiente iteracion
+                                System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";fracaso");
+                                this.showBoard();
                             }
                             if (isLegal(i, j, value)) {// si el valor no se encontro en fila, columna y cuadricula es legal
                                 this.board[i][j] = value;//se asigna el valor
@@ -63,16 +65,15 @@ public class Sudoku {
                     }
                 }
                 if (cellFilled == 81) {//si no hay celdas vacías
-                    success = true;//se llenaron todas las casillas
-                    System.out.println("Celdas asignadas: " + cellFilled);
+                    System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";exito");
+                    this.showBoard();
                     return true;
                 } else {
                     cellEmptyLast = cellEmpty;
                     cellEmpty = 0;
                 }
             }
-            System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmptyLast);
-            this.showBoard();
+
             iteraciones++;
         }
         return success;
@@ -89,12 +90,11 @@ public class Sudoku {
         }
         return cellsFilled;
     }
-    
+
     public int generarRandom(int rango[]) {
-        int a=  Math.abs((this.random.nextInt() % rango.length));
+        int a = Math.abs((this.random.nextInt() % rango.length));
         return rango[a];
     }
-
 
     /**
      * Determina si es legal que en una celda se coloque un número determinado,
