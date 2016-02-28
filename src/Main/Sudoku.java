@@ -37,7 +37,7 @@ public class Sudoku {
         boolean success = false;
         int value = 0;
         int iteraciones = 1;
-        System.out.println("numeroIteracion;celdasVacias;celdasLlenas");
+        System.out.println("numeroIteracion;celdasLlenas;celdasVacias;estado");
         while (iteraciones <= numeroIteraciones) {
             this.board = this.boardinit;//se inicializa el board
             cellFilled = this.cellsFilled();
@@ -51,6 +51,7 @@ public class Sudoku {
                                 //si la celda no está asignada
                                 value = this.generarRandom(this.NumerosFaltan(i, j));
                             } catch (Exception ex) {
+                                //cuando se tiene fracaso
                                 success = true;//pasar a la siguiente iteracion
                                 System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";fracaso");
                                 this.showBoard();
@@ -63,10 +64,10 @@ public class Sudoku {
                         }
                     }
                 }
+                //cuando se tiene exito
                 if (cellFilled == 81) {//si no hay celdas vacías
                     System.out.println(iteraciones + ";" + cellFilled + ";" + cellEmpty + ";exito");
                     this.showBoard();
-                    return true;
                 } 
             }
 
